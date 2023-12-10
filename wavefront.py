@@ -1,7 +1,14 @@
 import os
+from datetime import datetime
+
+LOG_FILE = 'LongBeachLogs2023.txt'
 
 def login():
     username = input("Enter your name for login: ")
+    timestamp = datetime.now().strftime("%b %d %Y %H:%M")
+    log_entry = f'{timestamp} : \"{username}\" logged in\n'
+    with open(LOG_FILE, 'a') as file:
+        file.write(log_entry)
     print(f"Welcome {username}!")
 
 def upload_manifest():
