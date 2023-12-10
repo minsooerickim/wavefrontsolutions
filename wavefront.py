@@ -6,7 +6,7 @@ LOG_FILE = 'LongBeachLogs2023.txt'
 def login():
     username = input("Enter your name for login: ")
     timestamp = datetime.now().strftime("%b %d %Y %H:%M")
-    log_entry = f'{timestamp} : \"{username}\" logged in\n'
+    log_entry = f"{timestamp} : \"{username}\" logged in\n"
     with open(LOG_FILE, 'a') as file:
         file.write(log_entry)
     print(f"Welcome {username}!")
@@ -16,8 +16,29 @@ def upload_manifest():
     filepath = input("Enter the full path to your manifest file: ")
     if os.path.exists(filepath):
         print(f"Manifest '{filepath}' has been successfully uploaded.")
+        after_upload_menu()
     else:
         print("The file path specified does not exist. Please try again.")
+
+def after_upload_menu():
+    while True:
+        print("\nWhat would you like to do next?")
+        print("1. Balance")
+        print("2. Load/Offload")
+        print("3. Return to Main Menu")
+        
+        choice = input("Choose an option (1-3): ")
+        
+        if choice == '1':
+            print("Balance function is not implemented yet.")
+            break
+        elif choice == '2':
+            print("Load/Offload function is not implemented yet.")
+            break
+        elif choice == '3':
+            break
+        else:
+            print("Invalid option, please try again.")
 
 def menu():
     print("Menu functionality will be implemented soon.")
