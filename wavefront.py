@@ -17,7 +17,7 @@ def upload_manifest():
     if os.path.exists(filepath):
         print(f"Manifest '{filepath}' has been successfully uploaded.")
         display_manifest(filepath)
-        after_upload_menu()
+        after_upload_menu(filepath)
         return filepath
     else:
         print("The file path specified does not exist. Please try again.")
@@ -32,7 +32,29 @@ def display_manifest(filepath):
                 # Only print out slots that are not UNUSED or NAN for clarity
                 print(f"Slot: {slot} - Content: {content}")
 
-def after_upload_menu():
+def load_offload(manifest_path):
+    if manifest_path:
+        print("You've selected Load/Offload.")
+        offload_containers(manifest_path)
+        onload_containers(manifest_path)
+    else:
+        print("Please upload a manifest before attempting to load or offload containers.")
+
+def offload_containers(manifest_path):
+    offload = input("Enter the x,y coordinates of the container to offload (e.g., 01,02) or 'done' to finish: ")
+    while offload.lower() != 'done':
+        # Here you would have the logic to offload the container
+        print(f"Container at {offload} scheduled for offloading.")
+        offload = input("Enter the x,y coordinates of the next container to offload or 'done' to finish: ")
+
+def onload_containers(manifest_path):
+    onload = input("Enter the x,y coordinates of the container to onload (e.g., 02,03) or 'done' to finish: ")
+    while onload.lower() != 'done':
+        # Here you would have the logic to onload the container
+        print(f"Container at {onload} scheduled for onloading.")
+        onload = input("Enter the x,y coordinates of the next container to onload or 'done' to finish: ")
+
+def after_upload_menu(filepath):
     while True:
         print("\nWhat would you like to do next?")
         print("1. Balance")
@@ -45,7 +67,7 @@ def after_upload_menu():
             print("Balance function is not implemented yet.")
             break
         elif choice == '2':
-            print("Load/Offload function is not implemented yet.")
+            load_offload(filepath)
             break
         elif choice == '3':
             break
@@ -56,6 +78,7 @@ def menu():
     print("Menu functionality will be implemented soon.")
 
 def main():
+    manifest_path = None
     while True:
         print("\nWavefront Solutions\n")
         print("1. Login")
@@ -68,7 +91,7 @@ def main():
         if choice == '1':
             login()
         elif choice == '2':
-            upload_manifest()
+            manifest_path = upload_manifest()
         elif choice == '3':
             menu()
         elif choice == '4':
