@@ -16,9 +16,21 @@ def upload_manifest():
     filepath = input("Enter the full path to your manifest file: ")
     if os.path.exists(filepath):
         print(f"Manifest '{filepath}' has been successfully uploaded.")
+        display_manifest(filepath)
         after_upload_menu()
+        return filepath
     else:
         print("The file path specified does not exist. Please try again.")
+        return None
+
+def display_manifest(filepath):
+    print("\nManifest Contents:\n")
+    with open(filepath, 'r') as file:
+        for line in file:
+            slot, _, content = line.strip().partition(', ')
+            if 'UNUSED' not in content and 'NAN' not in content:
+                # Only print out slots that are not UNUSED or NAN for clarity
+                print(f"Slot: {slot} - Content: {content}")
 
 def after_upload_menu():
     while True:
