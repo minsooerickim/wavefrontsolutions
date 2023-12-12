@@ -34,11 +34,21 @@ def display_manifest(filepath):
 
 def load_offload(manifest_path):
     if manifest_path:
+        timestamp = datetime.now().strftime("%b %d %Y %H:%M")
+        log_entry_start = f"{timestamp} load offload sequence for \"{os.path.basename(manifest_path)}\" started\n"
+        log_entry_end = f"{timestamp} load offload sequence for \"{os.path.basename(manifest_path)}\" finished\n"
+        with open(LOG_FILE, 'a') as file:
+            file.write(log_entry_start)
+        
         print("You've selected Load/Offload.")
         offload_containers(manifest_path)
         onload_containers(manifest_path)
+
+        with open(LOG_FILE, 'a') as file:
+            file.write(log_entry_end)
     else:
         print("Please upload a manifest before attempting to load or offload containers.")
+
 
 def offload_containers(manifest_path):
     offload = input("Enter the x,y coordinates of the container to offload (e.g., 01,02) or 'done' to finish: ")

@@ -1,1 +1,3 @@
-Dec 10 2023 15:10 : "Minsoo Kim" logged in
+Dec 11 2023 17:36 : "Minsoo kim" logged in
+Dec 11 2023 17:36 load offload sequence for "ShipCase1.txt" started
+Dec 11 2023 17:36 load offload sequence for "ShipCase1.txt" finished
