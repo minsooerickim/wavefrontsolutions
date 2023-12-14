@@ -156,3 +156,63 @@ class Search:
                     self.open.append(child)
             self.open.sort(key=lambda x: x.f)
         return None  
+
+
+
+
+"""testing"""
+moves = []
+arr1 = [
+    [0,0,0,0,0,6],
+    [0,0,0,0,9,6],
+    [0,9,0,1,5,6],
+    [0,7,3,2,5,6],
+    [5,2,3,4,5,6],
+    [0,0,0,0,0,4]
+]
+
+arr2 = [
+    [0,0,1,2],
+    [0,3,4,1],
+    [0,0,0,0],
+    [9,2,3,3]
+]
+
+test = Node(arr1,0,0,None)
+print("Test grid:")
+test.print_grid()
+'''
+print("Test: Node: get_top_container")
+print(test.get_top_container(test.grid,0))
+print(test.get_top_container(test.grid,1))
+print(test.get_top_container(test.grid,2))
+print(test.get_top_container(test.grid,3))
+print("Test: Node: move_container")
+print("move_container(0,1): \n", test.move_container(test.grid,0,1))
+test.print_grid()
+print("move_container(1,0): \n", test.move_container(test.grid,1,0))
+test.print_grid()
+print("move_container(2,0): \n", test.move_container(test.grid,2,0))
+test.print_grid()
+print("move_container(3,3): \n", test.move_container(test.grid,3,3))
+test.print_grid()
+'''
+
+
+##print(test.move_crane_to_col(test.grid))
+#for i in test.branch():
+#    i.print_grid()
+
+
+sea_test = Search(len(arr1))
+result_node = sea_test.process(arr1, 0.9)
+
+if result_node:
+    print("Found a balanced configuration:")
+    result_node.print_grid()
+    print("Balance score:", sea_test.balance_score(result_node.grid))
+else:
+    print("No balanced configuration found.")
+
+children = test.branch()
+print("\nNumber of children nodes:", len(children))

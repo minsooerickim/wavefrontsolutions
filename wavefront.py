@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from Search import Search
 
 LOG_FILE = 'LongBeachLogs2023.txt'
 
@@ -64,6 +65,48 @@ def onload_containers(manifest_path):
         print(f"Container at {onload} scheduled for onloading.")
         onload = input("Enter the x,y coordinates of the next container to onload or 'done' to finish: ")
 
+def parse_manifest_to_array_for_balance(manifest_path):
+    """
+    Parses manifest and puts weight as value in the correct x, y position in 2D array
+    """
+    # Initialize an empty 12x8 grid filled with zeros
+    grid = [[0 for _ in range(12)] for _ in range(8)]
+
+    with open(manifest_path, 'r') as file:
+        for line in file:
+            # Split the line and extract the necessary parts
+            parts = line.strip().split(', ')
+            # Extract the row and column from the position part
+            position = parts[0].strip("[]")
+            row, col = map(int, position.split(','))
+
+            # Extract the numeric value from the weight part
+            weight = int(parts[1].strip("{}"))
+
+            # Place the weight in the grid
+            # Adjusting for zero-indexing
+            grid[row - 1][col - 1] = weight
+
+    return grid
+
+def balance_containers(manifest_path):
+    if manifest_path:
+        print("Balancing the containers...")
+
+        # Load the manifest into an array
+        grid = parse_manifest_to_array_for_balance(manifest_path)
+
+        # Perform the balancing search
+        search_obj = Search(len(grid))
+        result_node = search_obj.process(grid, 0.9)
+
+        if result_node:
+            print("Found a balanced configuration:")
+            result_node.print_grid()
+            print("Balance score:", search_obj.balance_score(result_node.grid))
+        else:
+            print("No balanced configuration found.")
+
 def after_upload_menu(filepath):
     while True:
         print("\nWhat would you like to do next?")
@@ -74,7 +117,7 @@ def after_upload_menu(filepath):
         choice = input("Choose an option (1-3): ")
         
         if choice == '1':
-            print("Balance function is not implemented yet.")
+            balance_containers(filepath)
             break
         elif choice == '2':
             load_offload(filepath)
